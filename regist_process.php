@@ -8,11 +8,11 @@ $username = $_POST['name'];
 $usermajor = $_POST['major'];
 
 //mysql 데베에 정보들을 넣을 쿼리문
-$query = "INSERT INTO users (userID, password, name, major) VALUES ('$userID', '$userPW', '$username', '$usermajor')";
+$query = "INSERT INTO user (userID, password, name, major) VALUES ('$userID', '$userPW', '$username', '$usermajor')";
 
 if ($conn->query($query) === TRUE) {
     echo '<script> alert("회원가입이 완료되었습니다."); </script>';
-    header('Location: index.html'); // 성공시 index.html로 이동
+    header('Location: index.php'); // 성공시 index.html로 이동
 
 } else {
     echo '<script> alert("오류 발생", $conn->error ); </script>';
