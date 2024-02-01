@@ -1,3 +1,7 @@
+<?php
+  include 'inc_head.php';
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,6 +11,12 @@
     <link href="css\login.css" rel="stylesheet" />
 </head>
 <body>
+    <!--이미 로그인 한 상태라면 뒤로 돌아가도록 설정-->
+    <?php
+      if ( $jb_login ) {
+      echo '<script> alert("이미 로그인하셨습니다."); history.back(); </script>';
+      } else {
+    ?>
     <h2>숙명지식IN</h2>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
@@ -52,5 +62,8 @@
 
     <script src = "js/login.js"></script>
     <!-- js를 바디 끝에다 삽입해야 함 안그러면 적용이 안됨...(이 js는 html이 전부 로드 된 다음 실행 가능하므로 head에 작성할 경우 null 오류가 발생) -->
-</body>
+    <?php
+      }
+    ?>
+  </body>
 </html>

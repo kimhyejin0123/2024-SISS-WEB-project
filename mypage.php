@@ -1,8 +1,8 @@
 <?php
     include "connect.php"; 
-    session_start();
-
-    if(!isset($_SESSION['userID'])){
+    include "inc_head.php";
+    // 회원이 아닐 경우 이전으로 돌아가도록 설정
+    if(!$jb_login){
          echo "<script>alert('회원이 아닙니다.'); location.href='index.php';</script>";
          exit();
     }
@@ -34,12 +34,12 @@
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">숙명 지식IN</a>
+                <a class="navbar-brand" href="index.php">숙명 지식IN</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">질문하기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="write.php">질문하기</a></li>
                         <li class="nav-item"><a class="nav-link" href="mypage.php">마이페이지</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="login-regist.php">로그인</a></li>
                     </ul>
@@ -63,7 +63,7 @@
         <div class="modify">i</div>    
       </div>
       <div class="summaryContainer">
-        <div class="item">
+          <div class="item">
             <div class="number">0</div>
             <div>질문/답변 작성 수</div>
           </div>

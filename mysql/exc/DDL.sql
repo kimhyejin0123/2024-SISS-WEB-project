@@ -1,1 +1,1 @@
-SELECT * FROM 2024siss.users;
+SELECT * FROM 2024siss.user;
