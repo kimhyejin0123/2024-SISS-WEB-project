@@ -38,3 +38,31 @@
 - （０１２８） users 테이블을 user로 변경해서 작업함 (xampp 오류를 수정하다가 데베를 잘못 건드렸는데．．． 과정이 복잡하여 새로 만들어서 작업했다）
 - 프로필이미지를 받는 form 기능 작성 아직 미구현 
 - 로그인/로그아웃 버튼 감추기 기능 구현해야？ 
+
+### 5주차 - 질문글 작성 구현
+** 실수로 커밋 메시지를 "4주차 질문글 작성"으로 해버렸는데 5주차입니다...나머지 작업할 때 5주차로 커밋바람..
+
+1. 질문글 저장용 테이블 생성
+<br>MariaDB [2024SISS]> CREATE TABLE question(
+<br>-> id INT NOT NULL AUTO_INCREMENT,
+<br>-> author VARCHAR(100) NOT NULL,
+<br>-> title VARCHAR(100) NOT NULL,
+<br>-> content VARCHAR(500) NOT NULL,
+<br>-> hashtag VARCHAR(100) NOT NULL,
+<br>-> date DATETIME NOT NULL,
+<br>-> PRIMARY KEY(id)
+);
+
+2. inc_head.php 생성
+   <br>이를 모든 php 파일에 삽입하여 로그인 상태를 유지할 수 있는 코드
+   <br>로그인 페이지, 마이페이지, 질문글 페이지 모두 이를 활용한 조건문을 삽입하여 로그인하지 않았다면 접근이 불가하며 로그인하도록 경고창 띄우도록 구현
+   
+3. write.php 와 write_check.php 생성
+   <br>질문글 작성 페이지로서 제목, 내용, 카테고리(다중 선택 가능), 작성자(익명/본명 선택 가능), 작성일자(현재 날짜 자동 입력)를 삽입하여 전송하도록 구현
+   ![질문글_시연](https://github.com/kimhyejin0123/2024-SISS-WEB-project/assets/134305960/9b197531-03d9-4936-a35b-064ac000d4dc)
+<br>본인 이름대신 '실명'으로 들어가는 오류, date 미반영 등의 오류를 해결하여 맨 마지막줄에 제대로 테이블에 삽입된 것을 확인할 수 있음.
+
+5. 기타
+   숙명 지식IN 전용 귀여운 눈송이 favicon을 생성하였음..ㅎ
+   <br>asset 파일에 넣어놓았으니 기존 favicon 대신 이를 모든 파일에 삽입하도록 ㅎㅎ^^
+
