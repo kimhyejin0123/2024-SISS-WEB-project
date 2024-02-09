@@ -25,7 +25,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href = "css\mypage.css" rel="stylesheet"/>     
+    <link href = "css\mypage.css" rel="stylesheet"/> 
+    <link href="css/styles.css" rel="stylesheet" />    
     <!-- <link href = "css\nav.css" rel="stylesheet"/> -->
     <!-- index.html과 동일한 css의 nav 디자인 적용해야 함 -->
     <title>마이페이지</title>

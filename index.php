@@ -1,5 +1,19 @@
-<?php 
-    include "connect.php";
+<?php
+    include "connect.php"; 
+    include "inc_head.php";
+    
+    $loginID = $_SESSION['userID'];
+    $sql = "SELECT * FROM user WHERE userID='$loginID'";
+    $result = $conn->query($sql);
+    if (!$result) {
+        // 쿼리 수행 중 오류가 발생한 경우
+        die("Query failed: " . $conn->error);
+        //에러문 확인 가능 (에러 나서 필요했다)
+    }
+    $user = $result->fetch_assoc();
+
+    
+
 ?>
 
 <!DOCTYPE html>
@@ -29,8 +43,20 @@
                         <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="write.php">질문하기</a></li>
                         <li class="nav-item"><a class="nav-link" href="mypage.php">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="login-regist.php">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="logout.php">로그아웃</a></li>
+                        <?php 
+                            if($jb_login) {
+                                
+                        ?>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="logout.php">로그아웃</a></li>
+                        <?php 
+                            } else {
+                        ?>
+                            <li class="nav-item"><a class="nav-link active" 
+                        aria-current="page" href="login-regist.php">로그인</a></li>
+                        <?php 
+                            }
+                        ?> 
+                        
                     </ul>
                 </div>
             </div>
@@ -55,85 +81,41 @@
                     <div class="row">
                         <!--목록으로 수정한 곳-->
                         <div class="board_list_wrap">
-                            <div class="board_list">
-                                <div class="top">
-                                    <div class="num">번호</div>
-                                    <div class="title">제목</div>
-                                    <div class="field">카테고리</div>
-                                    <div class="answer">답변 수</div>
-                                    <div class="date">작성일자</div>
-                                </div>
-                                <div>
-                                    <div class="num">1</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">2</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">3</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">4</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">5</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">6</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">7</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">8</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">9</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                                <div>
-                                    <div class="num">10</div>
-                                    <div class="title"><a href="#">글 제목이 들어갑니다.</a></div>
-                                    <div class="field">교내생활</div>
-                                    <div class="answer">0</div>
-                                    <div class="date">2024.01.19</div>
-                                </div>
-                            </div>
+                            <table> 
+                                <thead>
+                                    <tr class="table_row">
+                                        <th class="num">번호</th>
+                                        <th class="title">제목</th>
+                                        <th class="hashtag">해시태그</th>
+                                        <th class="date">작성일</th>
+                                        <th class="author">작성자</th>
+                                    </tr>
+                                </thead>
+                                <?php
+                                    // question 테이블에서 id를 기준으로 10개까지 표시
+                                      $sql = "SELECT * from question order by id limit 0,10"; 
+                                      $result = $conn->query($sql);
+                                      
+                                        while($question = $result->fetch_array())
+                                        {
+                                          //title변수에 DB에서 가져온 title을 선택
+                                          $title=$question["title"]; 
+                                          if(strlen($title)>30)
+                                          { 
+                                            //title이 30을 넘어서면 ...표시
+                                            $title=str_replace($question["title"],mb_substr($question["title"],                         0,30,"utf-8")."...",$question["title"]);
+                                          }
+                                    ?>
+
+                                <tbody>
+                                    <td width="70"><?php echo $question['id']; ?></td>
+                                    <td width="500"><a href="post.php?post_id=<?php echo $question['id']; ?>"><?php echo $title;?></a></td> <!-- 게시글의 id를 post_id로 넘겨줌-->
+                                    <td width="120"><?php echo $question['hashtag']?></td>
+                                    <td width="100"><?php echo $question['date']?></td>
+                                    <td width="100"><?php echo $question['author']; ?></td>
+                                </tbody>
+                                <?php } ?>
+                            </table>
                         </div>
                     </div>
                     <!-- Pagination-->
@@ -144,8 +126,11 @@
                             <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
                             <li class="page-item"><a class="page-link" href="#!">2</a></li>
                             <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">10</a></li>
+                            <!--
+                                <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                                <li class="page-item"><a class="page-link" href="#!">10</a></li>
+                             -->
+                            
                             <li class="page-item"><a class="page-link" href="#!">>></a></li>
                         </ul>
                     </nav>
@@ -169,16 +154,16 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">교내생활</a></li>
-                                        <li><a href="#!">전공</a></li>
-                                        <li><a href="#!">진로</a></li>
+                                        <li><a href="#!">#교내생활</a></li>
+                                        <li><a href="#!">#전공</a></li>
+                                        <li><a href="#!">#진로</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">학식</a></li>
-                                        <li><a href="#!">학사/행정</a></li>
-                                        <li><a href="#!">수업</a></li>
+                                        <li><a href="#!">#학식</a></li>
+                                        <li><a href="#!">#학사/행정</a></li>
+                                        <li><a href="#!">#수업</a></li>
                                     </ul>
                                 </div>
                             </div>
