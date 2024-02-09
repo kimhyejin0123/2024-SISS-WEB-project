@@ -2,7 +2,8 @@
     include "connect.php"; 
     include "inc_head.php";
     
-    $loginID = $_SESSION['userID'];
+    if(isset( $_SESSION['userID'])) {
+        $loginID = $_SESSION['userID'];
     $sql = "SELECT * FROM user WHERE userID='$loginID'";
     $result = $conn->query($sql);
     if (!$result) {
@@ -11,6 +12,9 @@
         //에러문 확인 가능 (에러 나서 필요했다)
     }
     $user = $result->fetch_assoc();
+    }
+    else{
+    }
 
     
 
