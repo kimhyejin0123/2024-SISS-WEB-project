@@ -17,6 +17,26 @@
     }
     $question = $result->fetch_assoc();
 
+    // 답변자 userID 가져오기
+    $u_sql = "SELECT * FROM user WHERE userID='$loginID'";
+    $u_result = $conn->query($u_sql);
+    if (!$u_result) {
+        // 쿼리 수행 중 오류가 발생한 경우
+        die("Query failed: " . $conn->error);
+        //에러문 확인 가능
+    }
+    $user = $u_result->fetch_assoc();
+
+    // 답변글 가져오기
+    $sql2 = "SELECT * FROM answers WHERE id='$post_id'";
+    $a_result = $conn->query($sql2);
+    if (!$a_result) {
+        // 쿼리 수행 중 오류가 발생한 경우
+        die("Query failed: " . $conn->error);
+        //에러문 확인 가능 
+    }
+    $answers = $a_result->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -93,35 +113,44 @@
                                 <div> # <?php echo $question['hashtag']; ?></div>
                             </div>
                             <div class="question_edit"> 
-                            <button> <a href="edit.php?post_id=<?php echo $id ?>"> 수정 </a> </button>
-                            <button> <a href="delete.php?post_id=<?php echo $id ?>">삭제</a></button>
-                        </div>
+                                <button> <a href="edit.php?post_id=<?php echo $id ?>"> 수정 </a> </button>
+                                <button> <a href="delete.php?post_id=<?php echo $id ?>">삭제</a></button>
+                            </div>
                         </div>
                     </div>
                     
                 </div>
                 <!-- 답변글 (우측)-->
                 <div class="col-lg-4">
+                    <h1>A. </h1>
                     <!-- Search widget-->
                     <div class="card mb-4">
-                        <div class="card-header">답변글 작성자</div>
+                        <div class="card-header"><?=$user['name']?>님, 답변해주세요!</div>
                         <div class="card-body">
-                            <div class="answer_content">답변 내용</div>
+                            <div id="answer_content">
+                                <textarea id="target" name= "acontent" placeholder="답변 작성" required></textarea>
+                            </div>
                         </div>
                         <hr>
                         <div class="answer_footer">  
                             <!-- 그외 정보 footer -->
-                            <div>작성자 이름 </div>
-                            <div> 날짜 </div>
-                            <div>#해시태그</div>
+                            <div>
+                                작성자:  
+                                <input type="radio" name="author" value="익명"> 익명
+                                <input type="radio" name="author" value="<?=$user['name']?>"> <?=$user['name']?>
+                            </div>
+                            <div> 
+                                <br>작성일자:
+                                <input type="datetime-local" name='currentDatetime' id='currentDatetime'/>
+                            </div>
                         </div>
                         <div class="answer_edit"> 
+                            <button> <a href="answer_ok.php?post_id=<?php echo $id ?>"> 등록 </a> </button>
                             <!-- 작성자와 name이 다르다면 버튼 숨기기 -->
                             <button> <a href="edit.php?post_id=<?php echo $id ?>"> 수정 </a> </button>
                             <button> <a href="delete.php?post_id=<?php echo $id ?>"> 삭제 </a> </button>
                         </div>
                     </div>
-                    
                     <!-- Side widget (혹시 몰라서 남겨둠)
                     <div class="card mb-4">
                         <div class="card-header">Side Widget</div>
@@ -129,12 +158,38 @@
                     </div>
                     -->
                 </div>
+                <div class="question_post">
+                    <br><h2> A. 답변글 목록</h2>
+                    <hr>
+                    <div class="question_content"> 
+                        <?php echo $answers['content']; ?>
+                    </div> 
+                    <div class="question_footer">
+                        <div><?php echo $answers['author']; ?> </div>
+                        <div><?php echo $answers['date']; ?> </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; SOOKMYUNG SISS: Jisoo Kim & Hyejin Kim</p></div>
         </footer>
+        <!--작성일자를 현재로 설정하는 코드-->
+        <script>
+            document.getElementById('currentDatetime').value= new Date().toISOString().slice(0, 16);
+        </script>
+
+        <!--답변글 textarea 크기 자동 조절-->
+        <script>
+            const rowCount = value.split(/\r\n|\r|\n/).length; // 줄 수 세기
+            const targetTextarea = document.querySelector(`#target`);
+
+            if(rowCount < 4)
+                targetTextarea.style.height="52px"; //특정 줄 수 보다 작아지면 height가 이것보다 작아지지 않았으면 한다
+            else
+                targetTextarea.style.height= (rowCount * 18) + "px"; // 줄 수에 따라서 높이 조절
+        </script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

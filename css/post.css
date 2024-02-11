@@ -20,8 +20,16 @@
     padding: 60px;
 }
 
-.answer_content {
+#answer_content {
     height: 300px;
+}
+
+#answer_content textarea {
+	font-size:20px;
+	color:#333;
+	width: 300px;
+	height: 300px;
+	resize: none;
 }
 
 .answer_footer{

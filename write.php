@@ -42,8 +42,18 @@ $user = $result->fetch_assoc();
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="write.php">질문하기</a></li>
                     <li class="nav-item"><a class="nav-link" href="mypage.php">마이페이지</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="login-regist.php">로그인</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="logout.php">로그아웃</a></li>
+                    <?php 
+                        if($jb_login) {
+                    ?>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="logout.php">로그아웃</a></li>
+                    <?php 
+                        } else {
+                    ?>
+                        <li class="nav-item"><a class="nav-link active" 
+                    aria-current="page" href="login-regist.php">로그인</a></li>
+                    <?php 
+                        }
+                    ?> 
                 </ul>
             </div>
         </div>
