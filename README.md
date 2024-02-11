@@ -78,13 +78,13 @@
 7. post.php 내에 답변글 작성란 (우측) / 등록된 답변글 보기 (하단) 추가함
 8. 답변글 등록은 answer_ok.php로 처리
 9. 답변글 테이블 생성
-MariaDB [2024SISS]> CREATE TABLE answers(
--> id INT NOT NULL AUTO_INCREMENT,
--> post_id INT(11) NOT NULL,
--> author VARCHAR(100) NOT NULL,
--> content VARCHAR(500) NOT NULL,
--> date DATETIME NOT NULL,
--> PRIMARY KEY(id) );
+MariaDB [2024SISS]> <br>CREATE TABLE answers(
+<br>-> id INT NOT NULL AUTO_INCREMENT,
+<br>-> post_id INT(11) NOT NULL,
+<br>-> author VARCHAR(100) NOT NULL,
+<br>-> content VARCHAR(500) NOT NULL,
+<br>-> date DATETIME NOT NULL,
+<br>-> PRIMARY KEY(id) );
 
 6주차-1) 
 로그아웃시 오류 발생하길래 inc_head랑 index 좀 고쳐서 급하게 푸쉬함 
